@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Before 2026 Begins</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Dancing+Script:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --night-sky: #0a0e27;
+            --deep-blue: #1a1f3a;
+            --moonlight: #e8f4f8;
+            --soft-gold: #f4d6a8;
+            --pale-pink: #ffd4d4;
+            --lavender: #d4d4ff;
+            --cream: #faf8f3;
+            --rose-pink: #ffb6c1;
+            --deep-rose: #ff69b4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--night-sky);
+            color: var(--moonlight);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* Enhanced Starfield with twinkling effect */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        .star.small {
+            width: 1px;
+            height: 1px;
+        }
+
+        .star.medium {
+            width: 2px;
+            height: 2px;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+        }
+
+        .star.large {
+            width: 3px;
+            height: 3px;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Shooting stars */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: shoot 3s ease-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes shoot {
+            0% {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(300px) translateY(300px);
+            }
+        }
+
+        /* Realistic moon with craters and glow */
+        .moon-container {
+            position: absolute;
+            top: 8%;
+            right: 10%;
+            width: clamp(120px, 20vw, 200px);
+            height: clamp(120px, 20vw, 200px);
+            animation: moonFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes moonFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .moon {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fefefe, #e8e4d8, #d4cfbe);
+            box-shadow: 
+                0 0 40px rgba(254, 254, 254, 0.8),
+                0 0 80px rgba(254, 254, 254, 0.5),
+                inset -10px -10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        /* The "Camera Flash" animation */
+        .polaroid.clicked {
+            animation: flash-animation 0.6s ease-out;
+        }
+        
+        @keyframes flash-animation {
+            0% { filter: brightness(1); transform: scale(1); }
+            10% { filter: brightness(2.5) contrast(1.2); transform: scale(1.02); }
+            100% { filter: brightness(1); transform: scale(1); }
+        }
+        
+        /* Ensure cards are ready for the entrance animation */
+       /* Update your existing .month-card CSS to this */
+        .month-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            visibility: hidden; /* Add this to prevent ghost clicks */
+        }
+        
+        .month-card.visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            visibility: visible !important;
+        }
+
+        .moon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(200, 200, 200, 0.3) 0%, transparent 10%),
+                radial-gradient(circle at 70% 60%, rgba(180, 180, 180, 0.2) 0%, transparent 8%),
+                radial-gradient(circle at 50% 70%, rgba(190, 190, 190, 0.25) 0%, transparent 12%),
+                radial-gradient(circle at 40% 20%, rgba(170, 170, 170, 0.2) 0%, transparent 7%);
+        }
+
+        .moon-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle, rgba(254, 254, 254, 0.3) 0%, transparent 60%);
+            border-radius: 50%;
+            animation: glow 4s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* Floating flowers */
+        .flowers-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: clamp(20px, 4vw, 40px);
+            opacity: 0;
+            animation: floatFlower 15s ease-in-out infinite;
+        }
+
+        @keyframes floatFlower {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+            }
+        }
+
+        /* Bouquet at the welcome section */
+        .bouquet {
+            display: inline-block;
+            font-size: clamp(60px, 12vw, 120px);
+            animation: bouquetEntrance 2s ease-out, bouquetFloat 3s ease-in-out infinite;
+            animation-delay: 0s, 2s;
+            filter: drop-shadow(0 10px 30px rgba(255, 182, 193, 0.4));
+        }
+
+        @keyframes bouquetEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+            70% {
+                transform: scale(1.1) rotate(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes bouquetFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        /* Sections with enhanced animations */
+        section {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 1.5rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-content {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Typography with enhanced animations */
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--soft-gold);
+            line-height: 1.2;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(244, 214, 168, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(244, 214, 168, 0.8), 0 0 60px rgba(244, 214, 168, 0.4); }
+        }
+
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--soft-gold);
+            text-shadow: 0 0 30px rgba(244, 214, 168, 0.6);
+        }
+
+        h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--pale-pink);
+        }
+
+        p {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 1.5rem;
+            color: var(--moonlight);
+            font-weight: 300;
+            animation: fadeInText 1s ease-out;
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cursive-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            color: var(--lavender);
+            text-shadow: 0 0 20px rgba(212, 212, 255, 0.5);
+        }
+
+        /* Enhanced Button with particles */
+        .journey-btn {
+            margin-top: 3rem;
+            padding: 1.2rem 3.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, rgba(244, 214, 168, 0.1), rgba(255, 182, 193, 0.1));
+            border: 2px solid var(--soft-gold);
+            color: var(--soft-gold);
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(244, 214, 168, 0.3);
+        }
+
+        .journey-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(244, 214, 168, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .journey-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .journey-btn:hover {
+            background: linear-gradient(135deg, var(--soft-gold), var(--rose-pink));
+            color: var(--night-sky);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(244, 214, 168, 0.5);
+            border-color: var(--rose-pink);
+        }
+
+        .journey-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Opening section */
+        #opening {
+            background: radial-gradient(ellipse at center, var(--deep-blue) 0%, var(--night-sky) 100%);
+        }
+
+        /* Timeline section with enhanced cards */
+        #timeline {
+            padding: 5rem 1.5rem;
+            background: linear-gradient(180deg, var(--night-sky) 0%, var(--deep-blue) 50%, var(--night-sky) 100%);
+        }
+
+        .timeline-container {
+            max-width: 900px;
+            width: 100%;
+            margin: 3rem auto;
+        }
+
+        .month-card {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .month-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .polaroid {
+            background: var(--cream);
+            padding: 1rem;
+            padding-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            max-width: 400px;
+            margin: 0 auto;
+            transform: rotate(0deg);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .month-card:nth-child(even) .polaroid {
+            transform: rotate(2deg);
+        }
+
+        .month-card:nth-child(odd) .polaroid {
+            transform: rotate(-2deg);
+        }
+
+        .polaroid::after {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.3) rotate(180deg); }
+        }
+
+        .polaroid:hover::after {
+            opacity: 1;
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.08) translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(244, 214, 168, 0.3);
+        }
+
+        /* Add this to your .polaroid-photo CSS */
+        .polaroid-photo {
+            min-height: 250px; /* Ensures the background-color is visible if image is missing */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .polaroid-photo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .polaroid-caption {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: var(--night-sky);
+            text-align: center;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .month-label {
+            font-family: 'Crimson Text', serif;
+            font-size: 1rem;
+            color: var(--moonlight);
+            text-align: center;
+            margin-top: 1.5rem;
+            opacity: 0.7;
+            letter-spacing: 3px;
+        }
+
+        .song-indicator {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: var(--lavender);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .polaroid:hover .song-indicator {
+            opacity: 1;
+        }
+
+        /* Audio player */
+        .audio-player {
+            display: none;
+            margin-top: 1.5rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .audio-player.active {
+            display: block;
+            animation: slideIn 0.6s ease;
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-20px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        audio {
+            width: 100%;
+            max-width: 320px;
+            margin-top: 0.5rem;
+        }
+
+        /* Gratitude section */
+        #gratitude {
+            background: radial-gradient(ellipse at top, var(--deep-blue) 0%, var(--night-sky) 100%);
+        }
+
+        .gratitude-content {
+            text-align: left;
+            line-height: 2.2;
+        }
+
+        .gratitude-content p {
+            margin-bottom: 2.5rem;
+            animation-delay: calc(var(--i) * 0.2s);
+        }
+
+        /* Wishes section */
+        #wishes {
+            background: linear-gradient(180deg, var(--night-sky) 0%, #0f1429 100%);
+        }
+
+        .wishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1000px;
+        }
+
+        .wish-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 182, 193, 0.05));
+            padding: 2.5rem;
+            border-radius: 25px;
+            border: 1px solid rgba(232, 244, 248, 0.15);
+            backdrop-filter: blur(10px);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wish-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .wish-card:hover::before {
+            left: 100%;
+        }
+
+        .wish-card:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 182, 193, 0.1));
+            transform: translateY(-8px) scale(1.03);
+            border-color: rgba(244, 214, 168, 0.4);
+            box-shadow: 0 15px 40px rgba(255, 182, 193, 0.3);
+        }
+
+        .wish-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .wish-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.7rem;
+            color: var(--soft-gold);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .wish-text {
+            font-size: 1.15rem;
+            color: var(--moonlight);
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        /* Notebook section */
+        #notebook {
+            background: var(--cream);
+            color: #2d2d2d;
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .notebook-paper {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #faf8f3;
+            padding: 4rem 3rem;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border-radius: 5px;
+            animation: paperAppear 1.5s ease;
+        }
+
+        @keyframes paperAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateX(0deg);
+            }
+        }
+
+        .notebook-paper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 80px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                transparent 10%, 
+                #e8b4b8 10%, 
+                #e8b4b8 90%, 
+                transparent 90%);
+        }
+
+        .notebook-lines {
+            background-image: repeating-linear-gradient(
+                transparent,
+                transparent 31px,
+                rgba(209, 196, 180, 0.3) 31px,
+                rgba(209, 196, 180, 0.3) 32px
+            );
+            padding-left: 100px;
+            min-height: 500px;
+        }
+
+        .notebook-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            color: #2d2d2d;
+            line-height: 2.2;
+            text-align: left;
+            white-space: pre-wrap;
+            font-weight: 500;
+        }
+
+        .editable-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px dashed rgba(209, 196, 180, 0.5);
+            min-height: 200px;
+            outline: none;
+            cursor: text;
+        }
+
+        .editable-section:empty::before {
+            content: 'Click here to write your personal message...';
+            color: rgba(45, 45, 45, 0.4);
+            font-style: italic;
+        }
+
+        .date-signature {
+            margin-top: 3rem;
+            text-align: right;
+            font-size: 1.3rem;
+            opacity: 0.7;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.1rem;
+            color: var(--moonlight);
+            opacity: 0.7;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(15px); }
+        }
+
+        /* Hearts floating */
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatHeart 8s ease-in-out infinite;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            20% {
+                opacity: 0.8;
+                transform: translateY(-50px) scale(1);
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-400px) scale(0.5) rotate(45deg);
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            section {
+                padding: 2rem 1rem;
+            }
+
+            .moon-container {
+                width: 80px;
+                height: 80px;
+                top: 5%;
+                right: 5%;
+            }
+
+            .notebook-paper {
+                padding: 2rem 1.5rem;
+            }
+
+            .notebook-lines {
+                padding-left: 60px;
+            }
+
+            .notebook-paper::before {
+                left: 50px;
+            }
+
+            .wishes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bouquet {
+                font-size: 60px;
+            }
+        }
+
+        /* Loading animation */
+        .fade-in {
+            animation: fadeInUp 1.2s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hide sections initially */
+        .hidden {
+            display: none;
+        }
+
+        /* Sparkle effect on hover */
+        .sparkle-text:hover {
+            animation: sparkleShine 1s ease-in-out;
+        }
+
+        @keyframes sparkleShine {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 40px rgba(244, 214, 168, 0.8); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced Starfield -->
+    <div class="stars-container" id="starfield"></div>
+    
+    <!-- Floating flowers -->
+    <div class="flowers-container" id="flowers"></div>
+
+    <!-- Section 1: Opening -->
+    <section id="opening" class="visible">
+        <div class="moon-container">
+            <div class="moon-glow"></div>
+            <div class="moon"></div>
+        </div>
+        <div class="section-content fade-in">
+            <h1>Before 2026 begins...</h1>
+            <p style="font-size: clamp(1.2rem, 3vw, 1.6rem); margin-top: 2rem;">
+                let's take a quiet walk through the moments that stayed
+            </p>
+            <button class="journey-btn" onclick="startJourney()">
+                <span>Begin the Journey</span>
+            </button>
+        </div>
+        <div class="scroll-indicator">↓ scroll ↓</div>
+    </section>
+
+    <!-- Section 2: Reflection on 2025 -->
+    <section id="reflection" class="hidden">
+        <div class="section-content">
+            <h2>A Year of Quiet Transformation</h2>
+            <p>
+                2025 was a year that taught me to notice the small things... the warmth in a message, the comfort in consistency, the way some people make time feel softer just by being present.
+            </p>
+            <p>
+                It wasn't about grand moments or perfect days. It was about learning that growth can be gentle, that connection doesn't need to be loud, and that sometimes the most meaningful chapters are written in the quietest ink.
+            </p>
+            <p class="cursive-text" style="margin-top: 2rem;">
+                From a certain point onward, the year felt warmer because my sweet bubble became part of it.
+            </p>
+        </div>
+    </section>
+
+   <section id="timeline" class="hidden">
+    <div class="section-content">
+        <h2>The Months That Stayed</h2>
+        <p style="margin-bottom: 3rem;">
+            Each month held its own quiet mood, its own gentle lesson. These are the memories that lingered.
+        </p>
+    </div>
+    
+    <div class="timeline-container">
+
+        <div class="month-card" data-month="may">
+            <div class="polaroid" onclick="handlePhotoClick(this, 'may')">
+                <div class="polaroid-photo" style="background-image: url('may.jpg'); background-color: #fbc2eb;">
+                    <span>May 2025</span>
+                </div>
+                <div class="polaroid-caption">when something new began to bloom</div>
+                <div class="song-indicator">🎵 Tap to play a memory</div>
+            </div>
+            <div class="month-label">MAY</div>
+        </div>
+
+        <div class="month-card" data-month="june">
+            <div class="polaroid" onclick="handlePhotoClick(this, 'june')">
+                <div class="polaroid-photo" style="background-image: url('./june.jpg'); background-color: #a8edea;">
+                    <span>June 2025</span>
+                </div>
+                <div class="polaroid-caption">the quiet joy of getting to know</div>
+                <div class="song-indicator">🎵 Tap to play a memory</div>
+            </div>
+            <div class="month-label">JUNE</div>
+        </div>
+
+        <div class="month-card" data-month="july">
+            <div class="polaroid" onclick="handlePhotoClick(this, 'july')">
+                <div class="polaroid-photo" style="background-image: url('./july.jpg'); background-color: #ffecd2;">
+                    <span>July 2025</span>
+                </div>
+                <div class="polaroid-caption">warmth in the everyday</div>
+                <div class="song-indicator">🎵 Tap to play a memory</div>
+            </div>
+            <div class="month-label">JULY</div>
+        </div>
+
+        <div class="month-card" data-month="august">
+            <div class="polaroid" onclick="handlePhotoClick(this, 'august')">
+                <div class="polaroid-photo" style="background-image: url('/august.jpg'); background-color: #ff9a9e;">
+                    <span>August 2025</span>
+                </div>
+                <div class="polaroid-caption">learning what comfort feels like</div>
+                <div class="song-indicator">🎵 Tap to play a memory</div>
+            </div>
+            <div class="month-label">AUGUST</div>
+        </div>
+
+        <div class="month-card" data-month="september">
+            <div class="polaroid" onclick="handlePhotoClick(this, 'september')">
+                <div class="polaroid-photo" style="background-image: url('./september.jpg'); background-color: #cfd9df;">
+                    <span>September 2025</span>
+                </div>
+                <div class="polaroid-caption">soft lessons of patience</div>
+                <div class="song-indicator">🎵 Tap to play a memory</div>
+            </div>
+            <div class="month-label">SEPTEMBER</div>
+        </div>
+
+        <div class="month-card" data-month="october">
+            <div class="polaroid" onclick="handlePhotoClick(this, 'october')">
+                <div class="polaroid-photo" style="background-image: url('./october.jpg'); background-color: #fddb92;">
+                    <span>October 2025</span>
+                </div>
+                <div class="polaroid-caption">cool breezes and quiet thoughts</div>
+                <div class="song-indicator">🎵 Tap to play a memory</div>
+            </div>
+            <div class="month-label">OCTOBER</div>
+        </div>
+
+        <div class="month-card" data-month="november">
+            <div class="polaroid" onclick="handlePhotoClick(this, 'november')">
+                <div class="polaroid-photo" style="background-image: url('images/november.jpg'); background-color: #89f7fe;">
+                    <span>November 2025</span>
+                </div>
+                <div class="polaroid-caption">a reflection before the year ends</div>
+                <div class="song-indicator">🎵 Tap to play a memory</div>
+            </div>
+            <div class="month-label">NOVEMBER</div>
+        </div>
+
+        <div class="month-card" data-month="december">
+            <div class="polaroid" onclick="handlePhotoClick(this, 'december')">
+                <div class="polaroid-photo" style="background-image: url('images/december.jpg'); background-color: #f6d365;">
+                    <span>December 2025</span>
+                </div>
+                <div class="polaroid-caption">the final chapter, softly closed</div>
+                <div class="song-indicator">🎵 Tap to play a memory</div>
+            </div>
+            <div class="month-label">DECEMBER</div>
+        </div>
+
+    </div>
+</section>
+
+    <!-- Section 4: Meaning Behind Memories -->
+    <section id="meaning" class="hidden">
+        <div class="section-content">
+            <h2>Why These Moments Matter</h2>
+            <p>
+                Not every memory is extraordinary. Not every conversation changes everything. But some moments stay with us not because they're perfect, but because they're real.
+            </p>
+            <p>
+                It's the way someone makes time feel safe. The way their words arrive exactly when you need them. The way presence, even quiet presence, can be a gift.
+            </p>
+            <p class="cursive-text" style="margin-top: 2rem;">
+                My sweet bubble made these months feel lighter, not by trying to, but simply by being genuine and kind.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 5: Gratitude -->
+    <section id="gratitude" class="hidden">
+        <div class="section-content gratitude-content">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Gratitude, Written Softly</h2>
+            
+            <p>
+                There's a kind of comfort that doesn't announce itself. It doesn't arrive with grand gestures or promises. It simply exists, steady and warm, in the way someone shows up.
+            </p>
+
+            <p>
+                Thank you for being that kind of comfort this year. For the messages that felt like gentle reminders that someone was thinking of me. For the conversations that never felt rushed or forced, but flowed in their own natural, easy rhythm.
+            </p>
+
+            <p>
+                Thank you for your kindness, the kind that doesn't demand anything in return, that offers understanding before judgment, that makes space for imperfection without making it feel heavy.
+            </p>
+
+            <p>
+                Thank you for your warmth. Not the kind that burns bright and fades, but the kind that lingers softly, like sunlight through curtains, making everything feel a little more peaceful.
+            </p>
+
+            <p>
+                Thank you for being authentically you, for showing up as you are, without pretense, and for making it feel safe to do the same.
+            </p>
+
+            <p>
+                There's something deeply reassuring about people who don't need you to be anything other than yourself. You've been that person, and it has meant more than words can fully express.
+            </p>
+
+            <p class="cursive-text" style="margin-top: 3rem; text-align: center;">
+                This isn't gratitude with expectations. It's simply a quiet thank you for making 2025 feel a little more like home.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 6: Wishes for 2026 -->
+    <section id="wishes" class="hidden">
+        <div class="section-content">
+            <h2>Wishes for 2026</h2>
+            <p style="margin-bottom: 3rem;">
+                As a new chapter begins, here are the things I hope this year brings you.
+            </p>
+
+            <div class="wishes-grid">
+                <div class="wish-card">
+                    <div class="wish-icon">🌸</div>
+                    <div class="wish-title">Good Health</div>
+                    <p class="wish-text">May you feel strong in body and light in spirit. May rest come easily when you need it.</p>
+                </div>
+
+                <div class="wish-card">
+                    <div class="wish-icon">🌙</div>
+                    <div class="wish-title">Peace of Mind</div>
+                    <p class="wish-text">May your thoughts be gentle with you, and may you find calm even on the busiest days.</p>
+                </div>
+
+                <div class="wish-card">
+                    <div class="wish-icon">✨</div>
+                    <div class="wish-title">Confidence & Growth</div>
+                    <p class="wish-text">May you trust yourself more deeply and see just how capable you truly are.</p>
+                </div>
+
+                <div class="wish-card">
+                    <div class="wish-icon">🌟</div>
+                    <div class="wish-title">Success in Your Goals</div>
+                    <p class="wish-text">May the things you're working toward unfold beautifully, in their own perfect timing.</p>
+                </div>
+
+                <div class="wish-card">
+                    <div class="wish-icon">☀️</div>
+                    <div class="wish-title">Everyday Happiness</div>
+                    <p class="wish-text">May you find joy in small, unexpected moments... a warm drink, a kind word, a quiet evening.</p>
+                </div>
+
+                <div class="wish-card">
+                    <div class="wish-icon">💫</div>
+                    <div class="wish-title">Your Own Kind of Magic</div>
+                    <p class="wish-text">May you shine in your own beautiful way, without comparison or doubt.</p>
+                </div>
+            </div>
+
+            <p class="cursive-text" style="margin-top: 3rem;">
+                Happy New Year 2026, my sweet bubble 🌙
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 7: For the Days Ahead -->
+    <section id="days-ahead" class="hidden">
+        <div class="section-content">
+            <h2>For the Days Ahead</h2>
+            
+            <p style="margin-top: 2rem;">
+                On the days that feel exciting and full of possibility, remember that you earned this lightness, and you deserve to enjoy it fully.
+            </p>
+
+            <p>
+                On the days that feel busy and overwhelming, remember that you've navigated harder things before, and you're more capable than you give yourself credit for.
+            </p>
+
+            <p>
+                On the days that feel slow and uncertain, remember that rest isn't wasted time, and not every moment needs to be productive to matter.
+            </p>
+
+            <p>
+                On the days when doubt creeps in, remember that growth doesn't always feel confident, and you're allowed to be both uncertain and enough at the same time.
+            </p>
+
+            <p class="cursive-text" style="margin-top: 3rem;">
+                You are capable.<br>
+                You are enough.<br>
+                You deserve kindness and good things.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 8: Welcome 2026 -->
+    <section id="welcome" class="hidden">
+        <div class="section-content">
+            <div class="bouquet">💐</div>
+            <h2 style="margin-top: 2rem;">Welcome, 2026</h2>
+            
+            <p style="margin-top: 2rem; font-size: clamp(1.2rem, 2.8vw, 1.5rem);">
+                Some people don't mark time by dates. They mark it by how they make moments feel.
+            </p>
+
+            <p style="margin-top: 2rem;">
+                2025 was marked by warmth, growth, and quiet connection. By learning that the best kind of presence is the kind that feels easy. By realizing that some people make the world feel softer simply by being in it.
+            </p>
+
+            <p class="cursive-text" style="margin-top: 3rem; font-size: clamp(1.5rem, 3.5vw, 2rem);">
+                Happy New Year 2026, my sweet bubble 🌙
+            </p>
+
+            <p style="margin-top: 2rem;">
+                May this year be gentle with you, and may you shine in your own beautiful way.
+            </p>
+
+            <button class="journey-btn" onclick="scrollToNotebook()" style="margin-top: 3rem;">
+                <span>One More Thing...</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Section 9: Notebook -->
+    <section id="notebook" class="hidden">
+        <div class="notebook-paper">
+            <div class="notebook-lines">
+                <div class="notebook-text">
+I wanted to leave this page unfinished... because some feelings are better written slowly.
+
+This year felt different because of you. Not in dramatic ways, but in all the quiet ones that actually matter.
+
+The way your messages always felt thoughtful. The way conversations with you never felt like an obligation. The way you made time feel less heavy.
+
+                </div>
+                
+                <div class="notebook-text editable-section" contenteditable="true">
+                </div>
+
+                <div class="notebook-text date-signature">
+                    December 2025
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Enhanced starfield with multiple star sizes
+        function createStars() {
+            const starfield = document.getElementById('starfield');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random size distribution
+                const rand = Math.random();
+                if (rand < 0.6) {
+                    star.classList.add('small');
+                } else if (rand < 0.9) {
+                    star.classList.add('medium');
+                } else {
+                    star.classList.add('large');
+                }
+                
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (2 + Math.random() * 3) + 's';
+                starfield.appendChild(star);
+            }
+
+            // Add shooting stars
+            for (let i = 0; i < 3; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.left = Math.random() * 50 + '%';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.animationDelay = (i * 5 + Math.random() * 3) + 's';
+                starfield.appendChild(shootingStar);
+            }
+        }
+
+        // Create floating flowers
+        function createFlowers() {
+            const flowersContainer = document.getElementById('flowers');
+            const flowers = ['🌸', '🌺', '🌷', '🌹', '💐', '🌼'];
+            
+            for (let i = 0; i < 15; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+                flower.style.left = Math.random() * 100 + '%';
+                flower.style.animationDelay = Math.random() * 15 + 's';
+                flower.style.animationDuration = (12 + Math.random() * 6) + 's';
+                flowersContainer.appendChild(flower);
+            }
+        }
+
+        createStars();
+        createFlowers();
+
+        // Start journey - show all sections with staggered animations
+        function startJourney() {
+            const timeline = document.getElementById('timeline');
+            const reflection = document.getElementById('reflection');
+    
+            // 1. Show the sections first
+            reflection.classList.remove('hidden');
+            reflection.classList.add('visible');
+            timeline.classList.remove('hidden');
+            timeline.classList.add('visible');
+
+            // 2. Refresh the observer so it "sees" the cards now that timeline is display:block
+            const cards = document.querySelectorAll('.month-card');
+            cards.forEach((card, index) => { // Fallback: If the observer fails, force them visible after a delay
+                    
+                setTimeout(() => {
+                card.classList.add('visible');
+            }, 500 + (index * 200)); 
+        });
+
+            reflection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Scroll to notebook
+        function scrollToNotebook() {
+            document.getElementById('notebook').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Toggle song player
+        function toggleSong(element, month) {
+            const player = document.getElementById('player-' + month);
+            const allPlayers = document.querySelectorAll('.audio-player');
+            
+            // Pause all other audios
+            document.querySelectorAll('audio').forEach(audio => {
+                if (audio.parentElement.id !== 'player-' + month) {
+                    audio.pause();
+                    audio.currentTime = 0;
+                }
+            });
+
+            // Hide all other players
+            allPlayers.forEach(p => {
+                if (p.id !== 'player-' + month) {
+                    p.classList.remove('active');
+                }
+            });
+
+            // Toggle current player
+            player.classList.toggle('active');
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections and month cards
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        document.querySelectorAll('.month-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Save editable content to localStorage
+        const editableSection = document.querySelector('.editable-section');
+        
+        // Load saved content
+        const savedContent = localStorage.getItem('notebookContent');
+        if (savedContent) {
+            editableSection.innerHTML = savedContent;
+        }
+
+        // Save content on input
+        editableSection.addEventListener('input', () => {
+            localStorage.setItem('notebookContent', editableSection.innerHTML);
+        });
+
+        // Parallax effect for moon
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const moon = document.querySelector('.moon-container');
+            if (moon && scrolled < window.innerHeight) {
+                moon.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Create floating hearts on certain sections
+        function createFloatingHeart(section) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '💖';
+            heart.style.left = Math.random() * 90 + 5 + '%';
+            heart.style.bottom = '0';
+            heart.style.animationDelay = Math.random() * 3 + 's';
+            section.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 8000);
+        }
+
+        // Add hearts to gratitude section periodically
+        setInterval(() => {
+            const gratitudeSection = document.getElementById('gratitude');
+            if (gratitudeSection && gratitudeSection.classList.contains('visible')) {
+                createFloatingHeart(gratitudeSection);
+            }
+        }, 4000);
+
+        // Add sparkle effect to title
+        const title = document.querySelector('h1');
+        if (title) {
+            setInterval(() => {
+                title.classList.add('sparkle-text');
+                setTimeout(() => title.classList.remove('sparkle-text'), 1000);
+            }, 5000);
+        }
+     function handlePhotoClick(element, month) {
+    // 1. Add the flash animation class
+    element.classList.add('clicked');
+    
+    // 2. Remove it after animation finishes so it can be re-triggered
+    setTimeout(() => {
+        element.classList.remove('clicked');
+    }, 600);
+    
+    // 3. Trigger your music toggle (ensure this function exists in your code)
+    if (typeof toggleSong === "function") {
+        toggleSong(element, month);
+    }
+}
+
+
+    // Reveal sections on scroll
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+        sections.forEach(section => {
+        const top = section.getBoundingClientRect().top;
+        const trigger = window.innerHeight * 0.8; // show when section is 80% down the viewport
+        if(top < trigger){
+            section.classList.add('visible');
+            section.classList.remove('hidden');
+        }
+    });
+});
+
+// Staggered Entrance: Makes cards appear one after another as you scroll
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            const cards = entry.target.querySelectorAll('.month-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, index * 200); // 200ms delay between each card
+            });
+        }
+    });
+}, { threshold: 0.1 });
+
+// Initialize the observer
+document.addEventListener('DOMContentLoaded', () => {
+    const timelineSection = document.querySelector('#timeline');
+    if (timelineSection) timelineObserver.observe(timelineSection);
+});
+    </script>
+</body>
+</html>
