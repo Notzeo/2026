@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Dancing+Script:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --night-sky: #0a0e27;
@@ -62,6 +63,10 @@
             width: 2px;
             height: 2px;
             box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+        }
+
+        .audio-player{
+            display:none;
         }
 
         .star.large {
@@ -278,7 +283,7 @@
 
         /* Typography with enhanced animations */
         h1 {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Caveat', cursive;
             font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 600;
             margin-bottom: 2rem;
@@ -293,7 +298,7 @@
         }
 
         h2 {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Caveat', cursive;
             font-size: clamp(2rem, 6vw, 3.5rem);
             font-weight: 600;
             margin-bottom: 1.5rem;
@@ -302,7 +307,7 @@
         }
 
         h3 {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Caveat', cursive;
             font-size: clamp(1.5rem, 4vw, 2.2rem);
             font-weight: 500;
             margin-bottom: 1rem;
@@ -323,7 +328,7 @@
         }
 
         .cursive-text {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Caveat', cursive;
             font-size: clamp(1.3rem, 3vw, 1.8rem);
             color: var(--lavender);
             text-shadow: 0 0 20px rgba(212, 212, 255, 0.5);
@@ -521,10 +526,6 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .audio-player.active {
-            display: block;
-            animation: slideIn 0.6s ease;
-        }
 
         @keyframes slideIn {
             from { 
@@ -865,7 +866,7 @@
                 It wasn't about grand moments or perfect days. It was about learning that growth can be gentle, that connection doesn't need to be loud, and that sometimes the most meaningful chapters are written in the quietest ink.
             </p>
             <p class="cursive-text" style="margin-top: 2rem;">
-                From a certain point onward, the year felt warmer because my sweet bubble became part of it.
+                From a certain point onward, the year felt warmer because you became a part of it.
             </p>
         </div>
     </section>
@@ -890,6 +891,13 @@
             </div>
             <div class="month-label">MAY</div>
         </div>
+        <div class="audio-player" id="player-may">
+            <p>🎵 A song for May</p>
+            <audio preload="none">
+                <source src="./JVKE - her (official lyric video) - JVKE.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
 
         <div class="month-card" data-month="june">
             <div class="polaroid" onclick="handlePhotoClick(this, 'june')">
@@ -901,6 +909,14 @@
             </div>
             <div class="month-label">JUNE</div>
         </div>
+        <div class="audio-player" id="player-june">
+            <p>🎵 A song for May</p>
+            <audio preload="none">
+                <source src="./JVKE - oh to be loved (Official Lyric Video) - JVKE.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <!-- July card -->
 
         <div class="month-card" data-month="july">
             <div class="polaroid" onclick="handlePhotoClick(this, 'july')">
@@ -912,6 +928,15 @@
             </div>
             <div class="month-label">JULY</div>
         </div>
+        <div class="audio-player" id="player-july">
+            <p>🎵 A song for May</p>
+            <audio preload="none">
+                <source src="./JVKE - her (official lyric video) - JVKE.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+
+        <!-- August card -->
 
         <div class="month-card" data-month="august">
             <div class="polaroid" onclick="handlePhotoClick(this, 'august')">
@@ -922,7 +947,15 @@
                 <div class="song-indicator">🎵 Tap to play a memory</div>
             </div>
             <div class="month-label">AUGUST</div>
+            <div class="audio-player" id="player-august">
+            <p>🎵 A song for May</p>
+            <audio preload="none">
+                <source src="./JVKE -  pretty (official lyric video) - JVKE.mp3" type="audio/mpeg">
+            </audio>
         </div>
+        </div>
+
+        <!-- September Card -->
 
         <div class="month-card" data-month="september">
             <div class="polaroid" onclick="handlePhotoClick(this, 'september')">
@@ -934,6 +967,15 @@
             </div>
             <div class="month-label">SEPTEMBER</div>
         </div>
+           <div class="audio-player" id="player-september">
+            <p>🎵 A song for May</p>
+            <audio preload="none">
+                <source src="./JVKE - her (official lyric video) - JVKE.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+
+        <!-- October Card -->
 
         <div class="month-card" data-month="october">
             <div class="polaroid" onclick="handlePhotoClick(this, 'october')">
@@ -945,7 +987,15 @@
             </div>
             <div class="month-label">OCTOBER</div>
         </div>
+           <div class="audio-player" id="player-october">
+            <p>🎵 A song for May</p>
+            <audio preload="none">
+                <source src="./JVKE - her (official lyric video) - JVKE.mp3" type="audio/mpeg">
+            </audio>
+        </div>
 
+
+        <!-- November Card -->
         <div class="month-card" data-month="november">
             <div class="polaroid" onclick="handlePhotoClick(this, 'november')">
                 <div class="polaroid-photo" style="background-image: url('images/november.jpg'); background-color: #89f7fe;">
@@ -956,7 +1006,16 @@
             </div>
             <div class="month-label">NOVEMBER</div>
         </div>
+           <div class="audio-player" id="player-november">
+            <p>🎵 A song for May</p>
+            <audio preload="none">
+                <source src="./Until I found you - Stephen Sanchez & Em Beihold (sped up) - eethereal.mp3" type="audio/mpeg">
+            </audio>
+        </div>
 
+
+
+        <!-- December Card -->
         <div class="month-card" data-month="december">
             <div class="polaroid" onclick="handlePhotoClick(this, 'december')">
                 <div class="polaroid-photo" style="background-image: url('images/december.jpg'); background-color: #f6d365;">
@@ -967,6 +1026,13 @@
             </div>
             <div class="month-label">DECEMBER</div>
         </div>
+           <div class="audio-player" id="player-december">
+            <p>🎵 A song for May</p>
+            <audio preload="none">
+                <source src="./ed sheeran - perfect [ sped up ] lyrics - speedcore.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
 
     </div>
 </section>
@@ -1240,28 +1306,45 @@ Here’s to a new year and new moments I hope it brings you as much warmth and h
         }
 
         // Toggle song player
-        function toggleSong(element, month) {
-            const player = document.getElementById('player-' + month);
-            const allPlayers = document.querySelectorAll('.audio-player');
-            
-            // Pause all other audios
-            document.querySelectorAll('audio').forEach(audio => {
-                if (audio.parentElement.id !== 'player-' + month) {
-                    audio.pause();
-                    audio.currentTime = 0;
-                }
-            });
+    function toggleSong(element, month) {
+        const player = document.getElementById('player-' + month);
+        if (!player) return;
+        const audio = player.querySelector('audio');
+        const timing = songTimings[month];
 
-            // Hide all other players
-            allPlayers.forEach(p => {
-                if (p.id !== 'player-' + month) {
-                    p.classList.remove('active');
-                }
-            });
+    // Stop all other audios
+    document.querySelectorAll('audio').forEach(a => {
+        a.pause();
+        a.currentTime = 0;
+    });
 
-            // Toggle current player
-            player.classList.toggle('active');
+    if (!timing) {
+        audio.play();
+        return;
+    }
+    audio.currentTime = timing.start;
+    audio.play();
+
+    // Stop at end time
+    audio.ontimeupdate = () => {
+        if (audio.currentTime >= timing.end) {
+            audio.pause();
+            audio.currentTime = timing.start;
         }
+    };
+}
+
+
+        const songTimings = {
+            may: { start: 30, end: 55 },
+            june: { start: 12, end: 40 },
+            july: { start: 20, end: 60 },
+            august: { start: 0, end: 12 },
+            september: { start: 10, end: 35 },
+            october: { start: 25, end: 58 },
+            november: { start: 25, end: 38 },
+            december: { start: 26, end: 40 }
+        };
 
         // Intersection Observer for fade-in animations
         const observerOptions = {

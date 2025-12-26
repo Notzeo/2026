@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Sweet Bubble 🌷</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --paper: #fffcf0;
+            --ink: #4b3832;
+            --soft-pink: #fce4ec;
+            --faded-rose: #d4a373;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'Lora', serif;
+            overflow-x: hidden;
+        }
+
+        /* Handwritten Class - This is the magic font */
+        .handwritten {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            letter-spacing: 0px;
+        }
+
+        /* Sparkling Background */
+        #canvas {
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        /* Section 1: The Whisper */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            background: radial-gradient(circle at center, #ffffff 0%, var(--paper) 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #8d7d77;
+        }
+
+        /* Section 2: Scrapbook Timeline */
+        .scrapbook {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px 15px 60px 15px;
+            box-shadow: 5px 10px 30px rgba(0,0,0,0.08);
+            margin: 40px 0;
+            width: 90%;
+            max-width: 320px;
+            position: relative;
+            transition: transform 0.4s ease;
+        }
+
+        .polaroid img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            filter: sepia(10%) contrast(90%);
+        }
+
+        .polaroid .date {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+            color: #5d4037;
+        }
+
+        /* Section 3: The Diary Page */
+        .diary-section {
+            padding: 80px 25px;
+            background-color: #f3ece0;
+        }
+
+        .diary-page {
+            background: white;
+            padding: 50px 30px;
+            border-radius: 2px;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.02), 0 5px 15px rgba(0,0,0,0.05);
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            /* Rule Lines */
+            background-image: linear-gradient(#f1f1f1 1px, transparent 1px);
+            background-size: 100% 2.2rem;
+            line-height: 2.2rem;
+        }
+
+        .diary-page::before {
+            content: '';
+            position: absolute;
+            left: 40px; top: 0; bottom: 0;
+            width: 1px;
+            background: #ffadad;
+        }
+
+        .message-content {
+            font-size: 2.1rem;
+            color: #333;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            padding: 60px;
+            text-align: center;
+            font-style: italic;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <section class="hero">
+        <h1 class="handwritten">Hi, sweet bubble...</h1>
+        <p style="font-style: italic; font-size: 0.9rem;">I made this because 2025 was too beautiful to just let go.</p>
+    </section>
+
+    <section class="scrapbook">
+        <h2 class="handwritten" style="font-size: 2.2rem; margin-bottom: 50px;">The Months That Stayed</h2>
+
+        <div class="polaroid fade-in" style="transform: rotate(-3deg);" onclick="playSong('s1')">
+            <img src="YOUR_IMAGE_HERE" alt="May">
+            <div class="handwritten date">May 14, 2025</div>
+            <audio id="s1" src="SONG_URL"></audio>
+        </div>
+
+        <div class="polaroid fade-in" style="transform: rotate(4deg);" onclick="playSong('s2')">
+            <img src="YOUR_IMAGE_HERE" alt="Aug">
+            <div class="handwritten date">August 08, 2025</div>
+            <audio id="s2" src="SONG_URL"></audio>
+        </div>
+
+        <div class="polaroid fade-in" style="transform: rotate(-2deg);" onclick="playSong('s3')">
+            <img src="YOUR_IMAGE_HERE" alt="Dec">
+            <div class="handwritten date">December 25, 2025</div>
+            <audio id="s3" src="SONG_URL"></audio>
+        </div>
+    </section>
+
+    <section class="diary-section">
+        <div class="diary-page fade-in">
+            <div class="handwritten message-content">
+                To my favorite person,<br><br>
+                This year was 365 days of realizing how lucky I am. Every 24 hours spent with you felt like a gift.<br><br>
+                Thank you for being my peace. I can't wait for 2026 with you.<br><br>
+                I love you the most.<br>
+                Always. ❤️
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Created with love for you.</p>
+    </footer>
+
+    <script>
+        // Simple sparkle effect on touch
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('mousemove', (e) => {
+            ctx.fillStyle = 'rgba(212, 163, 115, 0.2)';
+            ctx.beginPath();
+            ctx.arc(e.clientX, e.clientY, 5, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Audio Toggle
+        function playSong(id) {
+            const audio = document.getElementById(id);
+            document.querySelectorAll('audio').forEach(a => { if(a !== audio) a.pause(); });
+            if (audio.paused) audio.play(); else audio.pause();
+        }
+    </script>
+</body>
+</html>
